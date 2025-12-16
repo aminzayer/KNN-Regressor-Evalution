@@ -7,47 +7,47 @@
 ## Test Data ==> [5 ,5 ,5] , [6 , 3 ,2]
 
 
-import pandas as pd
 import numpy as np
 
 # Load the Dataset
 ## Create DataFrame from Train Data
 
 
-# Use Pandas lib for Create Dataframe
-TrainData = pd.DataFrame([[3, 4, 5, 1],
-                         [6, 9, 7, 2],
-                         [2, 4, 5, 1],
-                         [1, 3, 2, 1],
-                         [7, 7, 7, 2],
-                         [5, 6, 7, 2],
-                         [4, 4 ,8, 2],
-                         [2, 2, 3, 1],
-                         [3, 5, 1, 1]],columns=['F1', 'F2', 'F3','Label'])
+# Use Numpy directly for TrainData
+TrainData = np.array([[3, 4, 5, 1],
+                      [6, 9, 7, 2],
+                      [2, 4, 5, 1],
+                      [1, 3, 2, 1],
+                      [7, 7, 7, 2],
+                      [5, 6, 7, 2],
+                      [4, 4 ,8, 2],
+                      [2, 2, 3, 1],
+                      [3, 5, 1, 1]])
 print('Show Train Data')
-TrainData
+print(TrainData)
+
 ## Create DataFrame from Test Data
 
-TestData = pd.DataFrame([[5, 5, 5, 0],
-                         [6, 3, 2, 0]],columns=['F1', 'F2', 'F3','Label'])
+TestData = np.array([[5, 5, 5, 0],
+                     [6, 3, 2, 0]])
 print('Show Test Data')
-TestData
+print(TestData)
 
 ## Select the Features
 
 # Train Data
-X_train = TrainData.iloc[:,[0,1,2]].values # Features Data
-Y_train = TrainData.iloc[:,[3]].values     # Labeled Data
+X_train = TrainData[:, [0, 1, 2]] # Features Data
+Y_train = TrainData[:, [3]]       # Labeled Data
 
 # Test Data
-X_test = TestData.iloc[:,[0,1,2]].values
-Y_test = TestData.iloc[:,[3]].values
+X_test = TestData[:, [0, 1, 2]]
+Y_test = TestData[:, [3]]
 
 # Show Train Data
-X_train,Y_train
+# X_train,Y_train
 
 # Show Test Data
-X_test,Y_test
+# X_test,Y_test
 
 ### Define Error Metrics
 #### As this is a regression problem, we have defined MAPE as the error metrics as shown below
@@ -88,15 +88,16 @@ KNN_model.fit(X_train,Y_train.ravel())
 
 KNN_predict = KNN_model.predict(X_test)  # Predictions on Testing data
 
-X_test
+# X_test
 
 Y_test = KNN_predict # Set Predicted label put on Y_Test
-Y_test   # Predicted Values
+# Y_test   # Predicted Values
 
 ## Accuracy Check For KNN Classification !
 
 # Using MAPE error metrics to check for the error rate and accuracy level
-KNN_MAPE = MAPE(Y_train,KNN_predict)
+KNN_MAPE = MAPE(Y_train.reshape(-1),KNN_predict) if KNN_predict.shape == Y_train.reshape(-1).shape else MAPE(Y_train, KNN_predict)
+
 Accuracy_KNN = 100 - KNN_MAPE
 print("MAPE: ",KNN_MAPE)
 print('Accuracy of KNN model: {:0.2f}%.'.format(Accuracy_KNN))
@@ -112,15 +113,16 @@ KNN_model = KNeighborsRegressor(n_neighbors=k).fit(X_train,Y_train)
 
 KNN_predict = KNN_model.predict(X_test) #Predictions on Testing data
 
-X_test
+# X_test
 
 Y_test = KNN_predict # Set Predicted label put on Y_Test
-Y_test   # Predicted Values
+# Y_test   # Predicted Values
 
 ## Accuracy Check For KNN Regressor Classification!
 
 # Using MAPE error metrics to check for the error rate and accuracy level
 KNN_MAPE = MAPE(Y_train.reshape(1, -1),KNN_predict)
+
 Accuracy_KNN = 100 - KNN_MAPE
 print("MAPE: ",KNN_MAPE)
 print('Accuracy of KNN model: {:0.2f}%.'.format(Accuracy_KNN))

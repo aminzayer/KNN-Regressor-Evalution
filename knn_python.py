@@ -8,28 +8,27 @@
 ## With This Label for Classification=> [1,2,1,1,2,2,2,1,1]
 
 
-import pandas as pd
 import numpy as np
 
 """# Load the Dataset
 ## Create DataFrame from Data
 """
 
-# Use Pandas lib for Create Dataframe
-MyData = pd.DataFrame([[3, 4, 5, 1],
-                       [6, 9, 7, 2],
-                       [2, 4, 5, 1],
-                       [1, 3, 2, 1],
-                       [7, 7, 7, 2],
-                       [5, 6, 7, 2],
-                       [4, 4 ,8, 2],
-                       [2, 2, 3, 1],
-                       [3, 5, 1, 1]],columns=['F1', 'F2', 'F3','Label'])
+# Use Numpy directly instead of Pandas for better performance
+MyData = np.array([[3, 4, 5, 1],
+                   [6, 9, 7, 2],
+                   [2, 4, 5, 1],
+                   [1, 3, 2, 1],
+                   [7, 7, 7, 2],
+                   [5, 6, 7, 2],
+                   [4, 4 ,8, 2],
+                   [2, 2, 3, 1],
+                   [3, 5, 1, 1]])
 
 ## Select the Features
 
-X = MyData.iloc[:,[0,1,2]].values # Features Data
-Y = MyData.iloc[:,[3]].values     # Labeled Data
+X = MyData[:, [0, 1, 2]] # Features Data
+Y = MyData[:, [3]]       # Labeled Data
 
 ## Split the Data in Dataset
 
